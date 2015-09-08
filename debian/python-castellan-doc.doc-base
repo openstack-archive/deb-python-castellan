@@ -1,0 +1,9 @@
+Document: python-castellan-doc
+Title: castellan Documentation
+Author: N/A
+Abstract: Sphinx documentation for castellan
+Section: Programming/Python
+
+Format: HTML
+Index: /usr/share/doc/python-castellan-doc/html/index.html
+Files: /usr/share/doc/python-castellan-doc/html/*

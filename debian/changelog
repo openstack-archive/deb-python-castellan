@@ -1,0 +1,5 @@
+python-castellan (0.2.0-1) unstable; urgency=medium
+
+  * Initial release. (Closes: #XXXXXX)
+
+ -- Thomas Goirand <zigo@debian.org>  Tue, 08 Sep 2015 22:29:18 +0200

@@ -1,0 +1,107 @@
+Source: python-castellan
+Section: python
+Priority: optional
+Maintainer: PKG OpenStack <openstack-devel@lists.alioth.debian.org>
+Uploaders: Thomas Goirand <zigo@debian.org>,
+Build-Depends: debhelper (>= 9),
+               dh-python,
+               python-all,
+               python-pbr (>= 1.6),
+               python-setuptools,
+               python-sphinx,
+               python3-all,
+               python3-pbr (>= 1.6),
+               python3-setuptools,
+Build-Depends-Indep: python-babel,
+                     python-barbicanclient (>= 3.3.0),
+                     python-cryptography (>= 1.0),
+                     python-hacking (>= 0.10),
+                     python-oslo.config (>= 2.3.0),
+                     python-oslo.context (>= 0.2.0),
+                     python-oslo.log (>= 1.8.0),
+                     python-oslo.policy (>= 0.5.0),
+                     python-oslo.serialization (>= 1.4.0),
+                     python-oslo.utils (>= 2.0.0),
+                     python-oslosphinx (>= 2.5.0),
+                     python-oslotest (>= 1.10.0),
+                     python-testscenarios,
+                     python-testtools (>= 1.4.0),
+                     python3-babel,
+                     python3-barbicanclient (>= 3.3.0),
+                     python3-cryptography (>= 1.0),
+                     python3-oslo.config (>= 2.3.0),
+                     python3-oslo.context (>= 0.2.0),
+                     python3-oslo.log (>= 1.8.0),
+                     python3-oslo.policy (>= 0.5.0),
+                     python3-oslo.serialization (>= 1.4.0),
+                     python3-oslo.utils (>= 2.0.0),
+                     python3-oslotest (>= 1.10.0),
+                     python3-subunit,
+                     python3-testscenarios,
+                     python3-testtools (>= 1.4.0),
+                     subunit,
+                     testrepository,
+Standards-Version: 3.9.6
+Vcs-Browser: http://anonscm.debian.org/gitweb/?p=openstack/python-castellan.git
+Vcs-Git: git://anonscm.debian.org/openstack/python-castellan.git
+Homepage: http://www.openstack.org/
+
+Package: python-castellan
+Architecture: all
+Depends: python-babel,
+         python-cryptography (>= 1.0),
+         python-oslo.config (>= 2.3.0),
+         python-oslo.context (>= 0.2.0),
+         python-oslo.log (>= 1.8.0),
+         python-oslo.policy (>= 0.3.1),
+         python-oslo.serialization (>= 1.4.0),
+         python-oslo.utils (>= 2.0.0),
+         python-pbr,
+         ${misc:Depends},
+         ${python:Depends},
+Suggests: python-castellan-doc,
+Description: generic key manager interface for OpenStack - Python 2.x
+ The Castellan module provides a generic key manager interface so that
+ OpenStack projects can use Barbican, but also have the flexibilty to choose an
+ alternative Key Manager as needed. This is helpful during development, for
+ example, where a simple implementation of the Key Manager Interface can be
+ used instead of having to spin up a Barbican instance.
+ .
+ This package contains the Python 2.x module.
+
+Package: python3-castellan
+Architecture: all
+Depends: python3-babel,
+         python3-cryptography (>= 1.0),
+         python3-oslo.config (>= 2.3.0),
+         python3-oslo.context (>= 0.2.0),
+         python3-oslo.log (>= 1.8.0),
+         python3-oslo.policy (>= 0.3.1),
+         python3-oslo.serialization (>= 1.4.0),
+         python3-oslo.utils (>= 2.0.0),
+         python3-pbr,
+         ${misc:Depends},
+         ${python3:Depends},
+Suggests: python-castellan-doc,
+Description: generic key manager interface for OpenStack - Python 3.x
+ The Castellan module provides a generic key manager interface so that
+ OpenStack projects can use Barbican, but also have the flexibilty to choose an
+ alternative Key Manager as needed. This is helpful during development, for
+ example, where a simple implementation of the Key Manager Interface can be
+ used instead of having to spin up a Barbican instance.
+ .
+ This package contains the Python 3.x module.
+
+Package: python-castellan-doc
+Section: doc
+Architecture: all
+Depends: ${misc:Depends},
+         ${sphinxdoc:Depends},
+Description: generic key manager interface for OpenStack - doc
+ The Castellan module provides a generic key manager interface so that
+ OpenStack projects can use Barbican, but also have the flexibilty to choose an
+ alternative Key Manager as needed. This is helpful during development, for
+ example, where a simple implementation of the Key Manager Interface can be
+ used instead of having to spin up a Barbican instance.
+ .
+ This package contains the documentation.
