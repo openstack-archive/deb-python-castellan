@@ -21,6 +21,10 @@ override_dh_auto_install:
 	done
 	rm -rf $(CURDIR)/debian/python*-castellan/usr/lib/python*/dist-packages/*.pth
 
+	oslo-config-generator --output-file $(CURDIR)/debian/python-castellan/etc/castellan/castellan.conf \
+		--wrap-width 140 \
+		--namespace castellan.config
+
 override_dh_auto_test:
 ifeq (,$(findstring nocheck, $(DEB_BUILD_OPTIONS)))
 	@echo "===> Running tests"
