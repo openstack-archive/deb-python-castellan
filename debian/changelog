@@ -1,11 +1,5 @@
-python-castellan (0.2.1-2) unstable; urgency=medium
-
-  * Avoid functional test listing with testr.
-
- -- Thomas Goirand <zigo@debian.org>  Wed, 16 Sep 2015 17:02:18 +0200
-
 python-castellan (0.2.1-1) unstable; urgency=medium
 
-  * Initial release. (Closes: #XXXXXX)
+  * Initial release. (Closes: #799622)
 
  -- Thomas Goirand <zigo@debian.org>  Tue, 08 Sep 2015 22:29:18 +0200
