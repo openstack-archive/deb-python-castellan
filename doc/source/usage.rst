@@ -1,6 +1,6 @@
-========
+=====
 Usage
-========
+=====
 
 This document describes some of the common usage patterns for Castellan. When
 incorporating this package into your applications, care should be taken to
@@ -16,7 +16,7 @@ can be supported through a single interface.
 
 In addition to the key manager, Castellan also provides primitives for
 various types of secrets (for example, asymmetric keys, simple passphrases,
-and certificates). These primitives are used in conjuction with the key
+and certificates). These primitives are used in conjunction with the key
 manager to create, store, retrieve, and destroy managed secrets.
 
 Another fundamental concept to using Castellan is the context object, most
@@ -25,6 +25,31 @@ represents information that is contained in the current request, and is
 usually populated in the WSGI pipeline. The information contained in this
 object will be used by Castellan to interact with the specific key manager
 that is being abstracted.
+
+**Example. Creating RequestContext from Keystone Client**
+
+.. code:: python
+
+    from keystoneclient.v3 import client
+    from oslo_context import context
+
+    username = 'admin'
+    password = 'openstack'
+    project_name = 'admin'
+    auth_url = 'http://localhost:5000/v3'
+    keystone_client = client.Client(username=username,
+                                    password=password,
+                                    project_name=project_name,
+                                    auth_url=auth_url,
+                                    project_domain_id='default')
+
+    project_list = keystone_client.projects.list(name=project_name)
+
+    ctxt = context.RequestContext(auth_token=keystone_client.auth_token,
+                                  tenant=project_list[0].id)
+
+ctxt can then be passed into any key_manager api call which requires
+a RequestContext object.
 
 **Example. Creating and storing a key.**
 
@@ -137,6 +162,24 @@ configuration.**
     from castellan import key_manager
 
     options.set_defaults(cfg.CONF, api_class='some.other.KeyManager')
+    manager = key_manager.API()
+
+Logging from within Castellan
+-----------------------------
+
+Castellan uses ``oslo_log`` for logging. Log information will be generated
+if your application has configured the ``oslo_log`` module. If your
+application does not use ``oslo_log`` then you can enable default logging
+using ``enable_logging`` in the ``castellan.options`` module.
+
+**Example. Enabling default logging.**
+
+.. code:: python
+
+    from castellan import options
+    from castellan import key_manager
+
+    options.enable_logging()
     manager = key_manager.API()
 
 Generating sample configuration files
