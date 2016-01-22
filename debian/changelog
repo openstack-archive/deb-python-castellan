@@ -1,8 +1,14 @@
+python-castellan (0.3.1-1) experimental; urgency=medium
+
+  * New upstream release.
+  * Fixed (build-)depends for this release.
+  * Fixed debian/copyright ordering.
+
+ -- Thomas Goirand <zigo@debian.org>  Fri, 22 Jan 2016 09:05:50 +0000
+
 python-castellan (0.2.1-2) unstable; urgency=medium
 
   * Uploading to unstable.
-  * Fixed (build-)depends for this release.
-  * Fixed debian/copyright ordering.
 
  -- Thomas Goirand <zigo@debian.org>  Thu, 15 Oct 2015 23:05:58 +0000
 
