@@ -27,12 +27,14 @@ class PrivateKeyTestCase(base.KeyTestCase):
     def _create_key(self):
         return private_key.PrivateKey(self.algorithm,
                                       self.length,
-                                      self.encoded)
+                                      self.encoded,
+                                      self.name)
 
     def setUp(self):
         self.algorithm = 'RSA'
         self.length = 2048
         self.encoded = bytes(utils.get_private_key_der())
+        self.name = 'my key'
 
         super(PrivateKeyTestCase, self).setUp()
 
@@ -42,6 +44,9 @@ class PrivateKeyTestCase(base.KeyTestCase):
     def test_get_length(self):
         self.assertEqual(self.length, self.key.bit_length)
 
+    def test_get_name(self):
+        self.assertEqual(self.name, self.key.name)
+
     def test_get_format(self):
         self.assertEqual('PKCS8', self.key.format)
 
@@ -50,12 +55,47 @@ class PrivateKeyTestCase(base.KeyTestCase):
 
     def test___eq__(self):
         self.assertTrue(self.key == self.key)
+        self.assertTrue(self.key is self.key)
 
         self.assertFalse(self.key is None)
         self.assertFalse(None == self.key)
 
-    def test___ne__(self):
-        self.assertFalse(self.key != self.key)
+        other_key = private_key.PrivateKey(self.algorithm,
+                                           self.length,
+                                           self.encoded,
+                                           self.name)
+        self.assertTrue(self.key == other_key)
+        self.assertFalse(self.key is other_key)
 
+    def test___ne___none(self):
         self.assertTrue(self.key is not None)
         self.assertTrue(None != self.key)
+
+    def test___ne___algorithm(self):
+        other_key = private_key.PrivateKey('DSA',
+                                           self.length,
+                                           self.encoded,
+                                           self.name)
+        self.assertTrue(self.key != other_key)
+
+    def test___ne___length(self):
+        other_key = private_key.PrivateKey(self.algorithm,
+                                           4096,
+                                           self.encoded,
+                                           self.name)
+        self.assertTrue(self.key != other_key)
+
+    def test___ne___encoded(self):
+        different_encoded = bytes(utils.get_private_key_der()) + b'\x00'
+        other_key = private_key.PrivateKey(self.algorithm,
+                                           self.length,
+                                           different_encoded,
+                                           self.name)
+        self.assertTrue(self.key != other_key)
+
+    def test___ne___name(self):
+        other_key = private_key.PrivateKey(self.algorithm,
+                                           self.length,
+                                           self.encoded,
+                                           'other key')
+        self.assertTrue(self.key != other_key)
