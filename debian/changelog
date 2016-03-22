@@ -1,8 +1,13 @@
-python-castellan (0.3.1-2) UNRELEASED; urgency=medium
+python-castellan (0.4.0-1) experimental; urgency=medium
 
+  [ Ondřej Nový ]
   * Fixed VCS URLs (https).
 
- -- Ondřej Nový <novy@ondrej.org>  Sun, 28 Feb 2016 15:33:54 +0100
+  [ Thomas Goirand ]
+  * New upstream release.
+  * Fixed (build-)depends for this release.
+
+ -- Thomas Goirand <zigo@debian.org>  Tue, 22 Mar 2016 17:47:43 +0100
 
 python-castellan (0.3.1-1) experimental; urgency=medium
 
