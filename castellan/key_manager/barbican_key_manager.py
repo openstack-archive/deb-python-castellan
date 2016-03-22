@@ -16,6 +16,7 @@
 """
 Key manager implementation for Barbican
 """
+import calendar
 import time
 
 from cryptography.hazmat import backends
@@ -40,7 +41,9 @@ from castellan.openstack.common import _i18n as u
 
 from barbicanclient import client as barbican_client
 from barbicanclient import exceptions as barbican_exceptions
+from oslo_utils import timeutils
 from six.moves import urllib
+
 
 barbican_opts = [
     cfg.StrOpt('barbican_endpoint',
@@ -100,17 +103,10 @@ class BarbicanKeyManager(key_manager.KeyManager):
             LOG.error(msg)
             raise exception.Forbidden(msg)
 
-        if not hasattr(context, 'tenant') or context.tenant is None:
-            msg = u._("Unable to create Barbican Client without tenant "
-                      "attribute in context object.")
-            LOG.error(msg)
-            raise exception.KeyManagerError(reason=msg)
-
         if self._barbican_client and self._current_context == context:
             return self._barbican_client
 
         try:
-            self._current_context = context
             auth = self._get_keystone_auth(context)
             sess = session.Session(auth=auth)
 
@@ -118,6 +114,7 @@ class BarbicanKeyManager(key_manager.KeyManager):
             self._barbican_client = barbican_client.Client(
                 session=sess,
                 endpoint=self._barbican_endpoint)
+            self._current_context = context
 
         except Exception as e:
             LOG.error(u._LE("Error creating Barbican client: %s"), e)
@@ -130,14 +127,48 @@ class BarbicanKeyManager(key_manager.KeyManager):
         return self._barbican_client
 
     def _get_keystone_auth(self, context):
-        # TODO(kfarr): support keystone v2
-        auth = identity.v3.Token(
-            auth_url=self.conf.barbican.auth_endpoint,
-            token=context.auth_token,
-            project_id=context.tenant,
-            domain_id=context.user_domain,
-            project_domain_id=context.project_domain)
-        return auth
+        auth_url = self.conf.barbican.auth_endpoint
+
+        if context.__class__.__name__ is 'KeystonePassword':
+            return identity.v3.Password(
+                auth_url=auth_url,
+                username=context.username,
+                password=context.password,
+                user_id=context.user_id,
+                user_domain_id=context.user_domain_id,
+                user_domain_name=context.user_domain_name,
+                trust_id=context.trust_id,
+                domain_id=context.domain_id,
+                domain_name=context.domain_name,
+                project_id=context.project_id,
+                project_name=context.project_name,
+                project_domain_id=context.project_domain_id,
+                project_domain_name=context.project_domain_name,
+                reauthenticate=context.reauthenticate)
+        elif context.__class__.__name__ is 'KeystoneToken':
+            return identity.v3.Token(
+                auth_url=auth_url,
+                token=context.token,
+                trust_id=context.trust_id,
+                domain_id=context.domain_id,
+                domain_name=context.domain_name,
+                project_id=context.project_id,
+                project_name=context.project_name,
+                project_domain_id=context.project_domain_id,
+                project_domain_name=context.project_domain_name,
+                reauthenticate=context.reauthenticate)
+        # this will be kept for oslo.context compatibility until
+        # projects begin to use utils.credential_factory
+        elif context.__class__.__name__ is 'RequestContext':
+            return identity.v3.Token(
+                auth_url=auth_url,
+                token=context.auth_token,
+                project_id=context.tenant)
+        else:
+            msg = "context must be of type KeystonePassword, KeystoneToken, "
+            "or RequestContext."
+            LOG.error(msg)
+            raise exception.Forbidden(reason=msg)
 
     def _get_barbican_endpoint(self, auth, sess):
         if self.conf.barbican.barbican_endpoint:
@@ -333,17 +364,26 @@ class BarbicanKeyManager(key_manager.KeyManager):
         Barbican key creation is done asynchronously, so this loop continues
         checking until the order is active or a timeout occurs.
         """
-        active = u'ACTIVE'
+        active_status = u'ACTIVE'
+        error_status = u'ERROR'
         number_of_retries = self.conf.barbican.number_of_retries
         retry_delay = self.conf.barbican.retry_delay
         order = barbican_client.orders.get(order_ref)
         time.sleep(.25)
         for n in range(number_of_retries):
-            if order.status != active:
+            if order.status == error_status:
+                kwargs = {"status": error_status,
+                          "code": order.error_status_code,
+                          "reason": order.error_reason}
+                msg = u._LE("Order is in %(status)s status - status code: "
+                            "%(code)s, status reason: %(reason)s") % kwargs
+                LOG.error(msg)
+                raise exception.KeyManagerError(reason=msg)
+            if order.status != active_status:
                 kwargs = {'attempt': n,
                           'total': number_of_retries,
                           'status': order.status,
-                          'active': active,
+                          'active': active_status,
                           'delay': retry_delay}
                 msg = u._LI("Retry attempt #%(attempt)i out of %(total)i: "
                             "Order status is '%(status)s'. Waiting for "
@@ -355,9 +395,9 @@ class BarbicanKeyManager(key_manager.KeyManager):
             else:
                 return order
         msg = u._LE("Exceeded retries: Failed to find '%(active)s' status "
-                    "within %(num_retries)i retries") % {'active': active,
-                                                         'num_retries':
-                                                         number_of_retries}
+                    "within %(num_retries)i retries") % {
+            'active': active_status,
+            'num_retries': number_of_retries}
         LOG.error(msg)
         raise exception.KeyManagerError(reason=msg)
 
@@ -421,14 +461,22 @@ class BarbicanKeyManager(key_manager.KeyManager):
 
         secret_data = self._get_secret_data(secret)
 
+        # convert created ISO8601 in Barbican to POSIX
+        if secret.created:
+            time_stamp = timeutils.parse_isotime(
+                str(secret.created)).timetuple()
+            created = calendar.timegm(time_stamp)
+
         if issubclass(secret_type, key_base_class.Key):
             return secret_type(secret.algorithm,
                                secret.bit_length,
                                secret_data,
-                               secret.name)
+                               secret.name,
+                               created)
         else:
             return secret_type(secret_data,
-                               secret.name)
+                               secret.name,
+                               created)
 
     def _get_secret(self, context, object_id):
         """Returns the metadata of the secret.

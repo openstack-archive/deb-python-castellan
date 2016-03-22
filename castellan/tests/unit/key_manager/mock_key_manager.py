@@ -53,7 +53,8 @@ class MockKeyManager(key_manager.KeyManager):
     This key manager is not suitable for use in production deployments.
     """
 
-    def __init__(self):
+    def __init__(self, configuration=None):
+        self.conf = configuration
         self.keys = {}
 
     def _generate_hex_key(self, key_length):
@@ -65,10 +66,11 @@ class MockKeyManager(key_manager.KeyManager):
 
     def _generate_key(self, **kwargs):
         name = kwargs.get('name', None)
+        algorithm = kwargs.get('algorithm', 'AES')
         key_length = kwargs.get('key_length', 256)
         _hex = self._generate_hex_key(key_length)
         return sym_key.SymmetricKey(
-            'AES',
+            algorithm,
             key_length,
             bytes(binascii.unhexlify(_hex)),
             name)

@@ -21,7 +21,7 @@ TEST_CONF = None
 
 identity_group = cfg.OptGroup(name='identity')
 identity_options = [
-    cfg.StrOpt('uri',
+    cfg.StrOpt('auth_url',
                default='http://localhost:5000/v3',
                help='Keystone endpoint'),
     cfg.StrOpt('username',
@@ -32,7 +32,13 @@ identity_options = [
                help='Password used with Keystone username'),
     cfg.StrOpt('project_name',
                default='admin',
-               help='Name of project, used by the given username')]
+               help='Name of project, used by the given username'),
+    cfg.StrOpt('user_domain_name',
+               default='Default',
+               help='Name of domain, used by the given username'),
+    cfg.StrOpt('project_domain_name',
+               default='Default',
+               help='Name of domain, used by the given project')]
 
 
 def setup_config(config_file=''):
@@ -44,12 +50,13 @@ def setup_config(config_file=''):
 
     config_to_load = []
     local_config = './../../../etc/castellan/castellan-functional.conf'
+    main_config = '/etc/castellan/castellan-functional.conf'
     if os.path.isfile(config_file):
         config_to_load.append(config_file)
     elif os.path.isfile(local_config):
         config_to_load.append(local_config)
-    else:
-        config_to_load.append('/etc/castellan/castellan-functional.conf')
+    elif os.path.isfile(main_config):
+        config_to_load.append(main_config)
 
     TEST_CONF(
         (),  # Required to load an anonymous config
