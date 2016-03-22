@@ -6,6 +6,7 @@ python-castellan (0.4.0-1) experimental; urgency=medium
   [ Thomas Goirand ]
   * New upstream release.
   * Fixed (build-)depends for this release.
+  * Standards-Version: 3.9.7 (no change).
 
  -- Thomas Goirand <zigo@debian.org>  Tue, 22 Mar 2016 17:47:43 +0100
 
