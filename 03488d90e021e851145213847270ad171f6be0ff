@@ -1,0 +1,9 @@
+Code-Review+2: Douglas Mendizábal <douglas.mendizabal@rackspace.com>
+Code-Review+1: Jiong Liu <liujiong@gohighsec.com>
+Workflow+1: Douglas Mendizábal <douglas.mendizabal@rackspace.com>
+Verified+2: Jenkins
+Submitted-by: Jenkins
+Submitted-at: Thu, 04 Aug 2016 15:57:24 +0000
+Reviewed-on: https://review.openstack.org/327361
+Project: openstack/deb-python-castellan
+Branch: refs/heads/master

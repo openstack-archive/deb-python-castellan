@@ -1,0 +1,12 @@
+Code-Review+2: Kaitlin Farr <kaitlin.farr@jhuapl.edu>
+Code-Review+2: John Wood <john.wood@rackspace.com>
+Code-Review+1: Vinod Kumar Yadav <vinod.kumar.v.yadav@ericsson.com>
+Code-Review+2: Nathan Reller <nathan.s.reller@gmail.com>
+Code-Review+2: Fernando Diaz <diazjf@us.ibm.com>
+Workflow+1: Fernando Diaz <diazjf@us.ibm.com>
+Verified+2: Jenkins
+Submitted-by: Jenkins
+Submitted-at: Mon, 04 Apr 2016 22:17:27 +0000
+Reviewed-on: https://review.openstack.org/293584
+Project: openstack/deb-python-castellan
+Branch: refs/heads/master

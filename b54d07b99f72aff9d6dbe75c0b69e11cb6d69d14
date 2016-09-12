@@ -1,0 +1,9 @@
+Code-Review+2: Kaitlin Farr <kaitlin.farr@jhuapl.edu>
+Code-Review+2: Fernando Diaz <diazjf@us.ibm.com>
+Workflow+1: Fernando Diaz <diazjf@us.ibm.com>
+Verified+2: Jenkins
+Submitted-by: Jenkins
+Submitted-at: Mon, 16 May 2016 15:24:10 +0000
+Reviewed-on: https://review.openstack.org/305168
+Project: openstack/deb-python-castellan
+Branch: refs/heads/master

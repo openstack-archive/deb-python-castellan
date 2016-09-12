@@ -1,0 +1,9 @@
+Code-Review+2: Kaitlin Farr <kaitlin.farr@jhuapl.edu>
+Code-Review+2: Nathan Reller <nathan.s.reller@gmail.com>
+Workflow+1: Nathan Reller <nathan.s.reller@gmail.com>
+Verified+2: Jenkins
+Submitted-by: Jenkins
+Submitted-at: Tue, 22 Mar 2016 19:46:58 +0000
+Reviewed-on: https://review.openstack.org/290103
+Project: openstack/deb-python-castellan
+Branch: refs/heads/master
