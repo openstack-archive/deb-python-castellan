@@ -1,25 +1,13 @@
 #!/usr/bin/make -f
 
-PYTHONS:=$(shell pyversions -vr)
-PYTHON3S:=$(shell py3versions -vr)
-
 UPSTREAM_GIT := https://github.com/openstack/castellan.git
 include /usr/share/openstack-pkg-tools/pkgos.make
-export OSLO_PACKAGE_VERSION=$(shell dpkg-parsechangelog | grep Version: | cut -d' ' -f2 | sed -e 's/^[[:digit:]]*://' -e 's/[-].*//' -e 's/~/.0/' | head -n 1)
 
 %:
 	dh $@ --buildsystem=python_distutils --with python2,python3,sphinxdoc
 
 override_dh_auto_install:
-	set -e ; for pyvers in $(PYTHONS); do \
-		python$$pyvers setup.py install --install-layout=deb \
-			--root $(CURDIR)/debian/python-castellan; \
-	done
-	set -e ; for pyvers in $(PYTHON3S); do \
-		python$$pyvers setup.py install --install-layout=deb \
-			--root $(CURDIR)/debian/python3-castellan; \
-	done
-	rm -rf $(CURDIR)/debian/python*-castellan/usr/lib/python*/dist-packages/*.pth
+	pkgos-dh_auto_install
 
 	mkdir -p $(CURDIR)/debian/python-castellan/etc/castellan
 	PYTHONPATH=. oslo-config-generator --output-file $(CURDIR)/debian/python-castellan/etc/castellan/castellan.conf \
@@ -28,18 +16,7 @@ override_dh_auto_install:
 
 override_dh_auto_test:
 ifeq (,$(findstring nocheck, $(DEB_BUILD_OPTIONS)))
-	@echo "===> Running tests"
-	set -e ; set -x ; for i in 2.7 $(PYTHON3S) ; do \
-		PYMAJOR=`echo $$i | cut -d'.' -f1` ; \
-		echo "===> Testing with python$$i (python$$PYMAJOR)" ; \
-		rm -rf .testrepository ; \
-		testr-python$$PYMAJOR init ; \
-		TEMP_REZ=`mktemp -t` ; \
-		OS_TEST_PATH=castellan/tests/unit PYTHONPATH=$(CURDIR) PYTHON=python$$i testr-python$$PYMAJOR run --subunit 'castellan\.tests\.unit.*' | tee $$TEMP_REZ | subunit2pyunit ; \
-		cat $$TEMP_REZ | subunit-filter -s --no-passthrough | subunit-stats ; \
-		rm -f $$TEMP_REZ ; \
-		testr-python$$PYMAJOR slowest ; \
-	done
+	pkgos-dh_auto_test 'castellan\.tests\.unit.*'
 endif
 
 

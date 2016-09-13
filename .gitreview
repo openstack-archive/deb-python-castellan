@@ -1,4 +1,5 @@
 [gerrit]
 host=review.openstack.org
 port=29418
-project=openstack/castellan.git
+project=openstack/deb-python-castellan.git
+defaultbranch=debian/newton

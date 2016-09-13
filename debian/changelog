@@ -1,9 +1,15 @@
-python-castellan (0.4.0-2) UNRELEASED; urgency=medium
+python-castellan (0.4.0-2) experimental; urgency=medium
 
+  [ Ondřej Nový ]
   * Standards-Version is 3.9.8 now (no change)
   * d/rules: Changed UPSTREAM_GIT protocol to https
 
- -- Ondřej Nový <novy@ondrej.org>  Sat, 09 Apr 2016 19:26:00 +0200
+  [ Thomas Goirand ]
+  * Using OpenStack's Gerrit as VCS URLs.
+  * Add a .gitreview file pointing to packaging-deb Gerrit.
+  * Using pkgos-dh_auto_{install,test} from openstack-pkg-tools >= 52~.
+
+ -- Thomas Goirand <zigo@debian.org>  Tue, 13 Sep 2016 21:17:22 +0200
 
 python-castellan (0.4.0-1) experimental; urgency=medium
 
