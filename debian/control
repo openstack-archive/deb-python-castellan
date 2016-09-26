@@ -43,8 +43,8 @@ Build-Depends-Indep: python-babel,
                      subunit,
                      testrepository,
 Standards-Version: 3.9.8
-Vcs-Browser: https://git.openstack.org/cgit/openstack/deb-python-castellan
-Vcs-Git: https://git.openstack.org/openstack/deb-python-castellan
+Vcs-Browser: https://git.openstack.org/cgit/openstack/deb-python-castellan?h=debian%2Fnewton
+Vcs-Git: https://git.openstack.org/openstack/deb-python-castellan -b debian/newton
 Homepage: http://www.openstack.org/
 
 Package: python-castellan
