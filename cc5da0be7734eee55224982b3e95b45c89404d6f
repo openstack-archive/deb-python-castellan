@@ -1,0 +1,10 @@
+Code-Review+2: Dave McCowan <dmccowan@cisco.com>
+Code-Review-1: Cedric Brandily <zzelle@gmail.com>
+Code-Review+2: Kaitlin Farr <kaitlin.farr@jhuapl.edu>
+Workflow+1: Kaitlin Farr <kaitlin.farr@jhuapl.edu>
+Verified+2: Jenkins
+Submitted-by: Jenkins
+Submitted-at: Mon, 24 Oct 2016 15:14:11 +0000
+Reviewed-on: https://review.openstack.org/386946
+Project: openstack/deb-python-castellan
+Branch: refs/heads/master
