@@ -1,3 +1,9 @@
+python-castellan (0.4.0-4) UNRELEASED; urgency=medium
+
+  * Bumped debhelper compat version to 10
+
+ -- Ondřej Nový <onovy@debian.org>  Thu, 24 Nov 2016 00:04:17 +0100
+
 python-castellan (0.4.0-3) unstable; urgency=medium
 
   [ Ondřej Nový ]
