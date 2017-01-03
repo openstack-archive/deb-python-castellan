@@ -1,0 +1,9 @@
+Code-Review+1: Jeremy Liu <liujiong@gohighsec.com>
+Code-Review+2: Dave McCowan <dmccowan@cisco.com>
+Workflow+1: Dave McCowan <dmccowan@cisco.com>
+Verified+2: Jenkins
+Submitted-by: Jenkins
+Submitted-at: Tue, 03 Jan 2017 15:08:10 +0000
+Reviewed-on: https://review.openstack.org/412925
+Project: openstack/deb-python-castellan
+Branch: refs/heads/master
