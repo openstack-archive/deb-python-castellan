@@ -1,0 +1,9 @@
+Code-Review+2: Fernando Diaz <diazjf@us.ibm.com>
+Code-Review+2: Dave McCowan <dmccowan@cisco.com>
+Workflow+1: Dave McCowan <dmccowan@cisco.com>
+Verified+2: Jenkins
+Submitted-by: Jenkins
+Submitted-at: Tue, 24 Jan 2017 14:42:40 +0000
+Reviewed-on: https://review.openstack.org/420828
+Project: openstack/deb-python-castellan
+Branch: refs/heads/master
