@@ -1,0 +1,9 @@
+Code-Review+2: Jeremy Liu <liujiong@gohighsec.com>
+Code-Review+2: Fernando Diaz <diazjf@us.ibm.com>
+Workflow+1: Fernando Diaz <diazjf@us.ibm.com>
+Verified+2: Jenkins
+Submitted-by: Jenkins
+Submitted-at: Thu, 18 May 2017 05:07:27 +0000
+Reviewed-on: https://review.openstack.org/465230
+Project: openstack/deb-python-castellan
+Branch: refs/heads/master
