@@ -1,0 +1,9 @@
+Code-Review+2: Jeremy Liu <liujiong@gohighsec.com>
+Code-Review+2: ChangBo Guo(gcb) <glongwave@gmail.com>
+Workflow+1: ChangBo Guo(gcb) <glongwave@gmail.com>
+Verified+2: Jenkins
+Submitted-by: Jenkins
+Submitted-at: Fri, 02 Jun 2017 07:13:12 +0000
+Reviewed-on: https://review.openstack.org/470085
+Project: openstack/deb-python-castellan
+Branch: refs/heads/master
