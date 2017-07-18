@@ -1,0 +1,9 @@
+Code-Review+2: Davanum Srinivas (dims) <davanum@gmail.com>
+Code-Review+2: Jeremy Liu <liujiong@gohighsec.com>
+Workflow+1: Jeremy Liu <liujiong@gohighsec.com>
+Verified+2: Jenkins
+Submitted-by: Jenkins
+Submitted-at: Tue, 18 Jul 2017 15:29:12 +0000
+Reviewed-on: https://review.openstack.org/418019
+Project: openstack/deb-python-castellan
+Branch: refs/heads/master
